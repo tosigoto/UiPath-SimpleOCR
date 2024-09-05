@@ -87,7 +87,8 @@
 ## 動作環境
 * Windows OS 10 64bit
 * UiPath Studio v2024.10.4
-* UiPath.Python.Activities v1.8.1
+  * UiPath.Python.Activities v1.8.1
 * Python v3.12
+  * opencv-python v4.10.0
 * .NET 6.0 Desktop Runtime v6.0.33
 
