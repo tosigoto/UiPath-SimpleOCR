@@ -101,22 +101,22 @@
       <AssemblyReference>System.IO.FileSystem.DriveInfo</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Flowchart DisplayName="MainChart" sap:VirtualizedContainerService.HintSize="978,811" sap2010:WorkflowViewState.IdRef="Flowchart_1">
+  <Flowchart DisplayName="MainChart" sap:VirtualizedContainerService.HintSize="1084,487" sap2010:WorkflowViewState.IdRef="Flowchart_1">
     <Flowchart.Variables>
-      <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Name="dicConfig" />
-      <Variable x:TypeArguments="sd:DataTable" Name="dtRows" />
-      <Variable x:TypeArguments="x:Int32" Name="rowIdx" />
-      <Variable x:TypeArguments="x:Int32" Name="rowIdxLast" />
-      <Variable x:TypeArguments="sd:DataRow" Name="crntRow" />
-      <Variable x:TypeArguments="x:String" Name="imgPath" />
-      <Variable x:TypeArguments="x:String" Name="ocrText" />
-      <Variable x:TypeArguments="x:String" Name="processId" />
-      <Variable x:TypeArguments="x:String" Name="imgListPath" />
-      <Variable x:TypeArguments="x:String" Name="timestamp" />
-      <Variable x:TypeArguments="x:Int32" Name="retryCountDown" />
-      <Variable x:TypeArguments="x:Boolean" Name="isPass" />
-      <Variable x:TypeArguments="ui:BusinessRuleException" Name="bizEx" />
-      <Variable x:TypeArguments="x:String" Name="imgListSheetName" />
+      <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:Annotation.AnnotationText="設定ディクショナリー" Name="dicConfig" />
+      <Variable x:TypeArguments="sd:DataTable" sap2010:Annotation.AnnotationText="画像リストのスプレッドシート" Name="dtRows" />
+      <Variable x:TypeArguments="x:Int32" sap2010:Annotation.AnnotationText="スプレッドシートのデータ行番号(0からカウント開始)" Name="rowIdx" />
+      <Variable x:TypeArguments="x:Int32" sap2010:Annotation.AnnotationText="スプレッドシートのデータ行最終番号" Name="rowIdxLast" />
+      <Variable x:TypeArguments="sd:DataRow" sap2010:Annotation.AnnotationText="スプレッドシートのデータ行" Name="rowCurrent" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="画像ファイルパス" Name="imgPath" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="OCR結果" Name="ocrText" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="プロセスID" Name="processId" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="画像リストファイルパス" Name="imgListPath" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="プロセス実行時のタイムスタンプ" Name="timestamp" />
+      <Variable x:TypeArguments="x:Int32" sap2010:Annotation.AnnotationText="残りリトライ回数" Name="retryCountDown" />
+      <Variable x:TypeArguments="x:Boolean" sap2010:Annotation.AnnotationText="プロセスを完遂したか？" Name="isPass" />
+      <Variable x:TypeArguments="ui:BusinessRuleException" sap2010:Annotation.AnnotationText="ビジネス例外" Name="bizEx" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="画像リストのシート名" Name="imgListSheetName" />
     </Flowchart.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -207,7 +207,7 @@
                     </ui:AssignOperation>
                     <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_3">
                       <ui:AssignOperation.To>
-                        <OutArgument x:TypeArguments="sd:DataRow">[crntRow]</OutArgument>
+                        <OutArgument x:TypeArguments="sd:DataRow">[rowCurrent]</OutArgument>
                       </ui:AssignOperation.To>
                       <ui:AssignOperation.Value>
                         <InArgument x:TypeArguments="sd:DataRow">[dtRows(rowIdx)]</InArgument>
@@ -218,7 +218,7 @@
                         <OutArgument x:TypeArguments="x:String">[imgPath]</OutArgument>
                       </ui:AssignOperation.To>
                       <ui:AssignOperation.Value>
-                        <InArgument x:TypeArguments="x:String">[crntRow("path").ToString.Trim]</InArgument>
+                        <InArgument x:TypeArguments="x:String">[rowCurrent("path").ToString.Trim]</InArgument>
                       </ui:AssignOperation.Value>
                     </ui:AssignOperation>
                     <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_6">
@@ -356,7 +356,7 @@
                               <scg:List x:TypeArguments="ui:AssignOperation" Capacity="8">
                                 <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_7">
                                   <ui:AssignOperation.To>
-                                    <OutArgument x:TypeArguments="x:Object">[crntRow("ocr-result")]</OutArgument>
+                                    <OutArgument x:TypeArguments="x:Object">[rowCurrent("ocr-result")]</OutArgument>
                                   </ui:AssignOperation.To>
                                   <ui:AssignOperation.Value>
                                     <InArgument x:TypeArguments="x:Object">[ocrText]</InArgument>
@@ -364,7 +364,7 @@
                                 </ui:AssignOperation>
                                 <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_14">
                                   <ui:AssignOperation.To>
-                                    <OutArgument x:TypeArguments="x:Object">[crntRow("timestamp")]</OutArgument>
+                                    <OutArgument x:TypeArguments="x:Object">[rowCurrent("timestamp")]</OutArgument>
                                   </ui:AssignOperation.To>
                                   <ui:AssignOperation.Value>
                                     <InArgument x:TypeArguments="x:Object">[timestamp]</InArgument>
@@ -372,7 +372,7 @@
                                 </ui:AssignOperation>
                                 <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_11">
                                   <ui:AssignOperation.To>
-                                    <OutArgument x:TypeArguments="x:Object">[crntRow("process-id")]</OutArgument>
+                                    <OutArgument x:TypeArguments="x:Object">[rowCurrent("process-id")]</OutArgument>
                                   </ui:AssignOperation.To>
                                   <ui:AssignOperation.Value>
                                     <InArgument x:TypeArguments="x:Object">[processId]</InArgument>
@@ -720,6 +720,28 @@
           <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="out_dic">[dicConfig]</OutArgument>
           <InArgument x:TypeArguments="x:String" x:Key="in_processId">Main</InArgument>
           <InOutArgument x:TypeArguments="ui:BusinessRuleException" x:Key="io_bizEx">[bizEx]</InOutArgument>
+          <InArgument x:TypeArguments="s:String[]" x:Key="in_mustKeys" xml:space="preserve">[{
+	"image-list-path", 
+	"image-list-sheet", 
+	"image-trim-dir", 
+	"image-char-dir", 
+	"base-image-width", 
+	"base-image-height", 
+	"base-image-trim-begin-x", 
+	"base-image-trim-begin-y", 
+	"base-image-trim-width", 
+	"base-image-trim-height", 
+	"char-color-r-between", 
+	"char-color-g-between", 
+	"char-color-b-between", 
+	"python-file-path", 
+	"python-method", 
+	"python-version", 
+	"clear-cache", 
+	"log-delimiter", 
+	"retry-count-down", 
+	"retry-delay-sec"
+}]</InArgument>
         </ui:InvokeWorkflowFile.Arguments>
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
