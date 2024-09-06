@@ -1,15 +1,14 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
 <Activity mc:Ignorable="sap sap2010" x:Class="ImageTrim" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ucaa="clr-namespace:UiPath.Core.Activities.Anchor2;assembly=UiPath.UIAutomationCore" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="in_imgPath" Type="InArgument(x:String)" />
-    <x:Property Name="in_savePath" Type="InArgument(x:String)" />
-    <x:Property Name="io_dic" Type="InOutArgument(scg:Dictionary(x:String, x:String))" />
-    <x:Property Name="in_processId" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="読み込み画像ファイルパス" Name="in_imgPath" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="保存画像ファイルパス" Name="in_savePath" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="プロセスID" Name="in_processId" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="設定ディクショナリー" Name="io_dicConfig" Type="InOutArgument(scg:Dictionary(x:String, x:String))" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>765,1459</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1024,1337</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>TEST_ImageRatio_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -102,49 +101,26 @@
       <AssemblyReference>UiPath.Python</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="ImageTrim" sap:VirtualizedContainerService.HintSize="541,1394" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="画像を切り抜く。&#xD;&#xA;&#xD;&#xA;切り抜き画像を新規保存する。" DisplayName="ImageTrim" sap:VirtualizedContainerService.HintSize="541,1272" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
-      <Variable x:TypeArguments="x:Double" Name="ratioWidth" />
-      <Variable x:TypeArguments="x:Double" Name="ratioHeight" />
-      <Variable x:TypeArguments="ui:Image" Name="img" />
-      <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Name="dicConfig" />
-      <Variable x:TypeArguments="ui:Image" Name="imgTrim" />
-      <Variable x:TypeArguments="ucaa:Box" Name="trimBox" />
-      <Variable x:TypeArguments="x:String" Name="processId" />
+      <Variable x:TypeArguments="x:Double" sap2010:Annotation.AnnotationText="画像の幅比率 = &#xA;  読み込み画像の幅 / 設定値（OCR対象画像の幅）" Name="ratioWidth" />
+      <Variable x:TypeArguments="x:Double" sap2010:Annotation.AnnotationText="画像の高さ比率 = &#xA;  読み込み画像の高さ / 設定値（OCR対象画像の高さ）" Name="ratioHeight" />
+      <Variable x:TypeArguments="ui:Image" sap2010:Annotation.AnnotationText="画像データ" Name="img" />
+      <Variable x:TypeArguments="ui:Image" sap2010:Annotation.AnnotationText="切り抜き画像データ" Name="imgTrim" />
+      <Variable x:TypeArguments="ucaa:Box" sap2010:Annotation.AnnotationText="切り抜きボックス" Name="trimBox" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="479,179" sap2010:WorkflowViewState.IdRef="MultipleAssign_4">
-      <ui:MultipleAssign.AssignOperations>
-        <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
-          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_6">
-            <ui:AssignOperation.To>
-              <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)">[dicConfig]</OutArgument>
-            </ui:AssignOperation.To>
-            <ui:AssignOperation.Value>
-              <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)">[io_dic]</InArgument>
-            </ui:AssignOperation.Value>
-          </ui:AssignOperation>
-          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_7">
-            <ui:AssignOperation.To>
-              <OutArgument x:TypeArguments="x:String">[processId]</OutArgument>
-            </ui:AssignOperation.To>
-            <ui:AssignOperation.Value>
-              <InArgument x:TypeArguments="x:String">[in_processId]</InArgument>
-            </ui:AssignOperation.Value>
-          </ui:AssignOperation>
-        </scg:List>
-      </ui:MultipleAssign.AssignOperations>
-    </ui:MultipleAssign>
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ProcessLog - Invoke Workflow File (Parts\ProcessLog.xaml)" sap:VirtualizedContainerService.HintSize="479,204" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Util\ProcessLog.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="プロセスログ：「画像ファイルを読み込む」" sap:VirtualizedContainerService.HintSize="479,204" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Util\ProcessLog.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <InArgument x:TypeArguments="x:String" x:Key="in_processId">[processId]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_processId">[in_processId]</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_label">Read Image</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_message">[in_imgPath]</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_delimiter">[dicConfig("log-delimiter")]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_delimiter">[io_dicConfig("log-delimiter")]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
     <ui:LoadImage DisplayName="Load Image" FileName="[in_imgPath]" sap:VirtualizedContainerService.HintSize="479,117" sap2010:WorkflowViewState.IdRef="LoadImage_1" Image="[img]" />
@@ -156,7 +132,7 @@
               <OutArgument x:TypeArguments="x:Double">[ratioWidth]</OutArgument>
             </ui:AssignOperation.To>
             <ui:AssignOperation.Value>
-              <InArgument x:TypeArguments="x:Double">[img.Width / Double.Parse( dicConfig("base-image-width") )]</InArgument>
+              <InArgument x:TypeArguments="x:Double">[img.Width / Double.Parse( io_dicConfig("base-image-width") )]</InArgument>
             </ui:AssignOperation.Value>
           </ui:AssignOperation>
           <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_2">
@@ -164,7 +140,7 @@
               <OutArgument x:TypeArguments="x:Double">[ratioHeight]</OutArgument>
             </ui:AssignOperation.To>
             <ui:AssignOperation.Value>
-              <InArgument x:TypeArguments="x:Double">[img.Height / Double.Parse( dicConfig("base-image-height") )]</InArgument>
+              <InArgument x:TypeArguments="x:Double">[img.Height / Double.Parse( io_dicConfig("base-image-height") )]</InArgument>
             </ui:AssignOperation.Value>
           </ui:AssignOperation>
           <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_4">
@@ -173,17 +149,17 @@
             </ui:AssignOperation.To>
             <ui:AssignOperation.Value>
               <InArgument x:TypeArguments="ucaa:Box" xml:space="preserve">[New Box(New Rectangle(
-	CInt( CInt( dicConfig("base-image-trim-begin-x") ) * ratioWidth ), 
-	CInt( CInt( dicConfig("base-image-trim-begin-y") ) * ratioHeight ), 
-	CInt( CInt( dicConfig("base-image-trim-width") ) * ratioWidth ), 
-	CInt( CInt( dicConfig("base-image-trim-height") ) * ratioHeight )
+	CInt( CInt( io_dicConfig("base-image-trim-begin-x") ) * ratioWidth ), 
+	CInt( CInt( io_dicConfig("base-image-trim-begin-y") ) * ratioHeight ), 
+	CInt( CInt( io_dicConfig("base-image-trim-width") ) * ratioWidth ), 
+	CInt( CInt( io_dicConfig("base-image-trim-height") ) * ratioHeight )
 ))]</InArgument>
             </ui:AssignOperation.Value>
           </ui:AssignOperation>
         </scg:List>
       </ui:MultipleAssign.AssignOperations>
     </ui:MultipleAssign>
-    <ui:MultipleAssign DisplayName="Trim Image" sap:VirtualizedContainerService.HintSize="479,148" sap2010:WorkflowViewState.IdRef="MultipleAssign_3">
+    <ui:MultipleAssign DisplayName="画像を切り抜く" sap:VirtualizedContainerService.HintSize="479,148" sap2010:WorkflowViewState.IdRef="MultipleAssign_3">
       <ui:MultipleAssign.AssignOperations>
         <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
           <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_5">
@@ -202,15 +178,15 @@
         </scg:List>
       </ui:MultipleAssign.AssignOperations>
     </ui:MultipleAssign>
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ProcessLog - Invoke Workflow File (Parts\ProcessLog.xaml)" sap:VirtualizedContainerService.HintSize="479,204" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Util\ProcessLog.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="プロセスログ：「切り抜き画像ファイルを保存」" sap:VirtualizedContainerService.HintSize="479,204" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Util\ProcessLog.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <InArgument x:TypeArguments="x:String" x:Key="in_processId">[processId]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_processId">[in_processId]</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_label">Write Trimmed-Image</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_message">[in_savePath]</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_delimiter">[dicConfig("log-delimiter")]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_delimiter">[io_dicConfig("log-delimiter")]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <ui:SaveImage DisplayName="Save Trimmed Image" FileName="[in_savePath]" sap:VirtualizedContainerService.HintSize="479,165" sap2010:WorkflowViewState.IdRef="SaveImage_1" Image="[imgTrim]" />
+    <ui:SaveImage DisplayName="切り抜き画像を保存" FileName="[in_savePath]" sap:VirtualizedContainerService.HintSize="479,165" sap2010:WorkflowViewState.IdRef="SaveImage_1" Image="[imgTrim]" />
     <ui:Comment sap:VirtualizedContainerService.HintSize="479,79" sap2010:WorkflowViewState.IdRef="Comment_1" Text="// Write your comments in the Text property" />
   </Sequence>
 </Activity>

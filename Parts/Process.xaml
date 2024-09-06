@@ -1,14 +1,14 @@
 <Activity mc:Ignorable="sap sap2010" x:Class="Process" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="in_imgPath" Type="InArgument(x:String)" />
-    <x:Property Name="out_ocrText" Type="OutArgument(x:String)" />
-    <x:Property Name="io_dicConfig" Type="InOutArgument(scg:Dictionary(x:String, x:String))" />
-    <x:Property Name="in_processId" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="OCR対象画像ファイルパス" Name="in_imgPath" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="設定ディクショナリー" Name="io_dicConfig" Type="InOutArgument(scg:Dictionary(x:String, x:String))" />
+    <x:Property sap2010:Annotation.AnnotationText="プロセスID" Name="in_processId" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="OCR結果" Name="out_ocrResText" Type="OutArgument(x:String)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>792,1646</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1024,1476</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>Process_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -91,54 +91,27 @@
       <AssemblyReference>System.IO.FileSystem.DriveInfo</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Process" sap:VirtualizedContainerService.HintSize="541,1581" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="一連の処理を行うプロセス。&#xA;- 画像を切り抜く&#xA;- 文字画像を作成&#xA;- OCRする&#xA;- OCR結果をログ出力&#xA;- 画像キャッシュファイル削除" DisplayName="Process" sap:VirtualizedContainerService.HintSize="541,1411" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
-      <Variable x:TypeArguments="x:String" Name="imgPath" />
-      <Variable x:TypeArguments="x:String" Name="imgTrimPath" />
-      <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Name="dicConfig" />
-      <Variable x:TypeArguments="x:String" Name="imgCharPath" />
-      <Variable x:TypeArguments="x:String" Name="ocrText" />
-      <Variable x:TypeArguments="x:String" Name="imgFileName" />
-      <Variable x:TypeArguments="x:String" Name="processId" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="切り抜き画像ファイルパス" Name="imgTrimPath" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="文字画像ファイルパス" Name="imgCharPath" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="OCR画像ファイルのファイル名" Name="imgFileName" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="479,334" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+    <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="479,210" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
       <ui:MultipleAssign.AssignOperations>
         <scg:List x:TypeArguments="ui:AssignOperation" Capacity="8">
-          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
-            <ui:AssignOperation.To>
-              <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)">[dicConfig]</OutArgument>
-            </ui:AssignOperation.To>
-            <ui:AssignOperation.Value>
-              <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)">[io_dicConfig]</InArgument>
-            </ui:AssignOperation.Value>
-          </ui:AssignOperation>
-          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_11">
-            <ui:AssignOperation.To>
-              <OutArgument x:TypeArguments="x:String">[processId]</OutArgument>
-            </ui:AssignOperation.To>
-            <ui:AssignOperation.Value>
-              <InArgument x:TypeArguments="x:String">[in_processId]</InArgument>
-            </ui:AssignOperation.Value>
-          </ui:AssignOperation>
-          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_2">
-            <ui:AssignOperation.To>
-              <OutArgument x:TypeArguments="x:String">[imgPath]</OutArgument>
-            </ui:AssignOperation.To>
-            <ui:AssignOperation.Value>
-              <InArgument x:TypeArguments="x:String">[in_imgPath]</InArgument>
-            </ui:AssignOperation.Value>
-          </ui:AssignOperation>
           <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_10">
             <ui:AssignOperation.To>
               <OutArgument x:TypeArguments="x:String">[imgFileName]</OutArgument>
             </ui:AssignOperation.To>
             <ui:AssignOperation.Value>
-              <InArgument x:TypeArguments="x:String">[Path.GetFileName(imgPath)]</InArgument>
+              <InArgument x:TypeArguments="x:String">[Path.GetFileName( in_imgPath )]</InArgument>
             </ui:AssignOperation.Value>
           </ui:AssignOperation>
           <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_3">
@@ -146,7 +119,7 @@
               <OutArgument x:TypeArguments="x:String">[imgTrimPath]</OutArgument>
             </ui:AssignOperation.To>
             <ui:AssignOperation.Value>
-              <InArgument x:TypeArguments="x:String" xml:space="preserve">[dicConfig("image-trim-dir") + imgFileName + "." + processId +  ".trim.png"]</InArgument>
+              <InArgument x:TypeArguments="x:String" xml:space="preserve">[io_dicConfig("image-trim-dir") + imgFileName + "." + in_processId +  ".trim.png"]</InArgument>
             </ui:AssignOperation.Value>
           </ui:AssignOperation>
           <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_7">
@@ -154,70 +127,48 @@
               <OutArgument x:TypeArguments="x:String">[imgCharPath]</OutArgument>
             </ui:AssignOperation.To>
             <ui:AssignOperation.Value>
-              <InArgument x:TypeArguments="x:String" xml:space="preserve">[dicConfig("image-char-dir") + imgFileName + "." + processId +  ".char.png"]</InArgument>
-            </ui:AssignOperation.Value>
-          </ui:AssignOperation>
-          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_9">
-            <ui:AssignOperation.To>
-              <OutArgument x:TypeArguments="x:String">[ocrText]</OutArgument>
-            </ui:AssignOperation.To>
-            <ui:AssignOperation.Value>
-              <InArgument x:TypeArguments="x:String">[Nothing]</InArgument>
+              <InArgument x:TypeArguments="x:String" xml:space="preserve">[io_dicConfig("image-char-dir") + imgFileName + "." + in_processId +  ".char.png"]</InArgument>
             </ui:AssignOperation.Value>
           </ui:AssignOperation>
         </scg:List>
       </ui:MultipleAssign.AssignOperations>
     </ui:MultipleAssign>
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ImageTrim - Invoke Workflow File (ImageTrim.xaml)" sap:VirtualizedContainerService.HintSize="479,204" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Parts\ImageTrim.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="画像を切り抜く" sap:VirtualizedContainerService.HintSize="479,204" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Parts\ImageTrim.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <InArgument x:TypeArguments="x:String" x:Key="in_imgPath">[imgPath]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_imgPath">[in_imgPath]</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_savePath">[imgTrimPath]</InArgument>
-        <InOutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="io_dic">[dicConfig]</InOutArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_processId">[processId]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_processId">[in_processId]</InArgument>
+        <InOutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="io_dicConfig">[io_dicConfig]</InOutArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ImageChar - Invoke Workflow File (ImageChar.xaml)" sap:VirtualizedContainerService.HintSize="479,204" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Parts\ImageChar.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="文字画像を作成" sap:VirtualizedContainerService.HintSize="479,204" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Parts\ImageChar.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <InOutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="io_dic">[dicConfig]</InOutArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_imgPath">[imgTrimPath]</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_savePath">[imgCharPath]</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_processId">[processId]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_processId">[in_processId]</InArgument>
+        <InOutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="io_dicConfig">[io_dicConfig]</InOutArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ImageOCR - Invoke Workflow File (ImageOCR.xaml)" sap:VirtualizedContainerService.HintSize="479,204" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Parts\ImageOCR.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="OCRする" sap:VirtualizedContainerService.HintSize="479,204" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Parts\ImageOCR.xaml">
       <ui:InvokeWorkflowFile.Arguments>
         <InArgument x:TypeArguments="x:String" x:Key="in_imgPath">[imgCharPath]</InArgument>
-        <OutArgument x:TypeArguments="x:String" x:Key="out_ocrText">[ocrText]</OutArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_processId">[processId]</InArgument>
-        <InOutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="io_dic">[dicConfig]</InOutArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_processId">[in_processId]</InArgument>
+        <OutArgument x:TypeArguments="x:String" x:Key="out_ocrResText">[out_ocrResText]</OutArgument>
+        <InOutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="io_dicConfig">[io_dicConfig]</InOutArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ProcessLog " sap:VirtualizedContainerService.HintSize="479,204" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="Util\ProcessLog.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="プロセスログ：「OCR結果」" sap:VirtualizedContainerService.HintSize="479,204" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="Util\ProcessLog.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <InArgument x:TypeArguments="x:String" x:Key="in_processId">[processId]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_processId">[in_processId]</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_label">OCR-Result</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_message">[ocrText]</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_delimiter">[dicConfig("log-delimiter")]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_message">[out_ocrResText]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_delimiter">[io_dicConfig("log-delimiter")]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="479,148" sap2010:WorkflowViewState.IdRef="MultipleAssign_3">
-      <ui:MultipleAssign.AssignOperations>
-        <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
-          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_8">
-            <ui:AssignOperation.To>
-              <OutArgument x:TypeArguments="x:String">[out_ocrText]</OutArgument>
-            </ui:AssignOperation.To>
-            <ui:AssignOperation.Value>
-              <InArgument x:TypeArguments="x:String">[ocrText]</InArgument>
-            </ui:AssignOperation.Value>
-          </ui:AssignOperation>
-        </scg:List>
-      </ui:MultipleAssign.AssignOperations>
-    </ui:MultipleAssign>
     <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Clear Cache Files" sap:VirtualizedContainerService.HintSize="479,195" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_6" UnSafe="False" WorkflowFileName="Parts\ClearCacheFiles.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <InOutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="io_dicConfig">[dicConfig]</InOutArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_processId">[processId]</InArgument>
+        <InOutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="io_dicConfig">[io_dicConfig]</InOutArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_processId">[in_processId]</InArgument>
         <InArgument x:TypeArguments="s:String[]" x:Key="in_pathAry">[{imgTrimPath, imgCharPath}]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
       <sap:WorkflowViewStateService.ViewState>

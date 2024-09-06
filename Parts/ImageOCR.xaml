@@ -1,10 +1,9 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
 <Activity mc:Ignorable="sap sap2010" x:Class="ImageOCR" this:ImageOCR.in_imgPath="ImgChar\a.png" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="in_imgPath" Type="InArgument(x:String)" />
-    <x:Property Name="out_ocrText" Type="OutArgument(x:String)" />
-    <x:Property Name="in_processId" Type="InArgument(x:String)" />
-    <x:Property Name="io_dic" Type="InOutArgument(scg:Dictionary(x:String, x:String))" />
+    <x:Property sap2010:Annotation.AnnotationText="画像ファイルパス" Name="in_imgPath" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="プロセスID" Name="in_processId" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="OCR結果" Name="out_ocrResText" Type="OutArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="設定ディクショナリー" Name="io_dicConfig" Type="InOutArgument(scg:Dictionary(x:String, x:String))" />
   </x:Members>
   <this:ImageOCR.in_processId>
     <InArgument x:TypeArguments="x:String" />
@@ -12,7 +11,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>792,1239</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1024,1060</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ImageOCR_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -99,60 +98,28 @@
       <AssemblyReference>UiPath.OCR.Contracts</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="ImageOCR" sap:VirtualizedContainerService.HintSize="541,1174" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="OCRで画像ファイルから文字列を読み取る。" DisplayName="ImageOCR" sap:VirtualizedContainerService.HintSize="496,995" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
-      <Variable x:TypeArguments="ui:Image" Name="img" />
-      <Variable x:TypeArguments="x:String" Name="processId" />
-      <Variable x:TypeArguments="x:String" Name="imgPath" />
-      <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Name="dicConfig" />
+      <Variable x:TypeArguments="ui:Image" sap2010:Annotation.AnnotationText="画像データ" Name="img" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="479,210" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
-      <ui:MultipleAssign.AssignOperations>
-        <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
-          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_2">
-            <ui:AssignOperation.To>
-              <OutArgument x:TypeArguments="x:String">[imgPath]</OutArgument>
-            </ui:AssignOperation.To>
-            <ui:AssignOperation.Value>
-              <InArgument x:TypeArguments="x:String">[in_imgPath]</InArgument>
-            </ui:AssignOperation.Value>
-          </ui:AssignOperation>
-          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
-            <ui:AssignOperation.To>
-              <OutArgument x:TypeArguments="x:String">[processId]</OutArgument>
-            </ui:AssignOperation.To>
-            <ui:AssignOperation.Value>
-              <InArgument x:TypeArguments="x:String">[in_processId]</InArgument>
-            </ui:AssignOperation.Value>
-          </ui:AssignOperation>
-          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_3">
-            <ui:AssignOperation.To>
-              <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)">[dicConfig]</OutArgument>
-            </ui:AssignOperation.To>
-            <ui:AssignOperation.Value>
-              <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)">[io_dic]</InArgument>
-            </ui:AssignOperation.Value>
-          </ui:AssignOperation>
-        </scg:List>
-      </ui:MultipleAssign.AssignOperations>
-    </ui:MultipleAssign>
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ProcessLog - Invoke Workflow File (Parts\ProcessLog.xaml)" sap:VirtualizedContainerService.HintSize="479,204" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Util\ProcessLog.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="プロセスログ：「画像ファイル読み込み」" sap:VirtualizedContainerService.HintSize="434,204" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Util\ProcessLog.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <InArgument x:TypeArguments="x:String" x:Key="in_processId">[processId]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_processId">[in_processId]</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_label">Read Image</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_message">[imgPath]</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_delimiter">[dicConfig("log-delimiter")]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_message">[in_imgPath]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_delimiter">[io_dicConfig("log-delimiter")]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <ui:LoadImage DisplayName="Load Image" FileName="[imgPath]" sap:VirtualizedContainerService.HintSize="479,117" sap2010:WorkflowViewState.IdRef="LoadImage_2" Image="[img]" />
-    <TryCatch DisplayName="OCRで文字列を取得" sap:VirtualizedContainerService.HintSize="479,476" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+    <ui:LoadImage DisplayName="Load Image" FileName="[in_imgPath]" sap:VirtualizedContainerService.HintSize="434,117" sap2010:WorkflowViewState.IdRef="LoadImage_2" Image="[img]" />
+    <TryCatch DisplayName="OCRで文字列を取得" sap:VirtualizedContainerService.HintSize="434,476" sap2010:WorkflowViewState.IdRef="TryCatch_1">
       <TryCatch.Try>
-        <ui:GoogleOCR AllowedCharacters="{x:Null}" DeniedCharacters="{x:Null}" FilterRegion="{x:Null}" Invert="{x:Null}" Language="{x:Null}" Output="{x:Null}" PredictionId="{x:Null}" Profile="{x:Null}" Scale="{x:Null}" ComputeSkewAngle="False" DisplayName="Tesseract OCR" ExtractWords="False" sap:VirtualizedContainerService.HintSize="200,25" sap2010:WorkflowViewState.IdRef="GoogleOCR_1" Image="[img]" NoopExecution="False" Text="[out_ocrText]" />
+        <ui:GoogleOCR AllowedCharacters="{x:Null}" DeniedCharacters="{x:Null}" FilterRegion="{x:Null}" Invert="{x:Null}" Language="{x:Null}" Output="{x:Null}" PredictionId="{x:Null}" Profile="{x:Null}" Scale="{x:Null}" ComputeSkewAngle="False" DisplayName="Tesseract OCR" ExtractWords="False" sap:VirtualizedContainerService.HintSize="200,25" sap2010:WorkflowViewState.IdRef="GoogleOCR_1" Image="[img]" NoopExecution="False" Text="[out_ocrResText]" />
       </TryCatch.Try>
       <TryCatch.Catches>
         <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="400,282" sap2010:WorkflowViewState.IdRef="Catch`1_1">
@@ -166,18 +133,18 @@
             <ActivityAction.Argument>
               <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
             </ActivityAction.Argument>
-            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ProcessLog - Invoke Workflow File (Parts\ProcessLog.xaml)" sap:VirtualizedContainerService.HintSize="335,172" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Util\ProcessLog.xaml">
+            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="プロセスログ：「OCRエラー」" sap:VirtualizedContainerService.HintSize="334,172" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Util\ProcessLog.xaml">
               <ui:InvokeWorkflowFile.Arguments>
-                <InArgument x:TypeArguments="x:String" x:Key="in_processId">[processId]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_processId">[in_processId]</InArgument>
                 <InArgument x:TypeArguments="x:String" x:Key="in_label">OCR-ERROR</InArgument>
-                <InArgument x:TypeArguments="x:String" x:Key="in_message">[imgPath]</InArgument>
-                <InArgument x:TypeArguments="x:String" x:Key="in_delimiter">[dicConfig("log-delimiter")]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_message">[in_imgPath]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_delimiter">[io_dicConfig("log-delimiter")]</InArgument>
               </ui:InvokeWorkflowFile.Arguments>
             </ui:InvokeWorkflowFile>
           </ActivityAction>
         </Catch>
       </TryCatch.Catches>
     </TryCatch>
-    <ui:Comment sap:VirtualizedContainerService.HintSize="479,79" sap2010:WorkflowViewState.IdRef="Comment_1" Text="// Write your comments in the Text property" />
+    <ui:Comment sap:VirtualizedContainerService.HintSize="434,79" sap2010:WorkflowViewState.IdRef="Comment_1" Text="// Write your comments in the Text property" />
   </Sequence>
 </Activity>

@@ -1,11 +1,11 @@
 <Activity mc:Ignorable="sap sap2010" x:Class="LoadList" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="in_listPath" Type="InArgument(x:String)" />
-    <x:Property Name="out_dtRows" Type="OutArgument(sd:DataTable)" />
-    <x:Property Name="io_bizEx" Type="InOutArgument(ui:BusinessRuleException)" />
-    <x:Property Name="in_processId" Type="InArgument(x:String)" />
-    <x:Property Name="io_dicConfig" Type="InOutArgument(scg:Dictionary(x:String, x:String))" />
-    <x:Property Name="in_listSheetName" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="リストファイルパス" Name="in_listPath" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="スプレッドシート" Name="out_dtRows" Type="OutArgument(sd:DataTable)" />
+    <x:Property sap2010:Annotation.AnnotationText="ビジネス例外" Name="io_bizEx" Type="InOutArgument(ui:BusinessRuleException)" />
+    <x:Property sap2010:Annotation.AnnotationText="プロセスID" Name="in_processId" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="設定ディクショナリー" Name="io_dicConfig" Type="InOutArgument(scg:Dictionary(x:String, x:String))" />
+    <x:Property sap2010:Annotation.AnnotationText="読み込みシート名" Name="in_listSheetName" Type="InArgument(x:String)" />
   </x:Members>
   <this:LoadList.in_processId>
     <InArgument x:TypeArguments="x:String" />
@@ -105,14 +105,14 @@
       <AssemblyReference>System.Data.SqlClient</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="リストファイルを読み込む。&#xA;&#xA;読み込みに失敗した場合、ビジネス例外をセットして、すぐにこのシーケンスを離脱する。" DisplayName="LoadList" sap:VirtualizedContainerService.HintSize="643,888" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="リストファイルを読み込む。&#xA;&#xA;リストが読み込めない場合、ビジネス例外をセットして、すぐにこのシーケンスを離脱する。" DisplayName="LoadList" sap:VirtualizedContainerService.HintSize="643,888" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Main Log" sap:VirtualizedContainerService.HintSize="581,204" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Util\ProcessLog.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="プロセスログ：「リスト読み込み」" sap:VirtualizedContainerService.HintSize="581,204" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Util\ProcessLog.xaml">
       <ui:InvokeWorkflowFile.Arguments>
         <InArgument x:TypeArguments="x:String" x:Key="in_processId">Main</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_label">Load List</InArgument>
@@ -127,7 +127,7 @@
     </ui:InvokeWorkflowFile>
     <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="581,539" sap2010:WorkflowViewState.IdRef="TryCatch_1">
       <TryCatch.Try>
-        <ui:ReadRange Range="{x:Null}" AddHeaders="True" DataTable="[out_dtRows]" DisplayName="Get 画像リスト" sap:VirtualizedContainerService.HintSize="334,88" sap2010:WorkflowViewState.IdRef="ReadRange_1" SheetName="[in_listSheetName]" WorkbookPath="[in_listPath]">
+        <ui:ReadRange Range="{x:Null}" AddHeaders="True" DataTable="[out_dtRows]" DisplayName="リスト読み込み" sap:VirtualizedContainerService.HintSize="334,88" sap2010:WorkflowViewState.IdRef="ReadRange_1" SheetName="[in_listSheetName]" WorkbookPath="[in_listPath]">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -153,7 +153,7 @@
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
-              <ui:MultipleAssign DisplayName="ビジネス例外をセット：読み込めない" sap:VirtualizedContainerService.HintSize="479,148" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+              <ui:MultipleAssign DisplayName="ビジネス例外をセット：「リストが読み込めない」" sap:VirtualizedContainerService.HintSize="479,148" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
                 <ui:MultipleAssign.AssignOperations>
                   <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
                     <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">

@@ -1,10 +1,9 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
 <Activity mc:Ignorable="sap sap2010" x:Class="ImageChar" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:p="http://schemas.uipath.com/workflow/activities/python" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="io_dic" Type="InOutArgument(scg:Dictionary(x:String, x:String))" />
-    <x:Property Name="in_imgPath" Type="InArgument(x:String)" />
-    <x:Property Name="in_savePath" Type="InArgument(x:String)" />
-    <x:Property Name="in_processId" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="読み込み画像ファイルパス" Name="in_imgPath" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="保存画像ファイルパス" Name="in_savePath" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="プロセスID" Name="in_processId" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="設定ディクショナリー" Name="io_dicConfig" Type="InOutArgument(scg:Dictionary(x:String, x:String))" />
   </x:Members>
   <this:ImageChar.in_processId>
     <InArgument x:TypeArguments="x:String" />
@@ -12,7 +11,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>765,1825</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1024,1498</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ImageChar_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -102,41 +101,18 @@
       <AssemblyReference>System.Runtime.Numerics</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="ImageChar" sap:VirtualizedContainerService.HintSize="637,1760" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="文字画像ファイルを作成する。" DisplayName="ImageChar" sap:VirtualizedContainerService.HintSize="637,1433" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
-      <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Name="dicConfig" />
-      <Variable x:TypeArguments="x:String" Name="localAppDataPath" />
-      <Variable x:TypeArguments="x:String" Name="pythonExePath" />
-      <Variable x:TypeArguments="x:String" Name="pythonLibPath" />
-      <Variable x:TypeArguments="x:String" Name="processId" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="WindowsのAppDataパス" Name="localAppDataPath" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Python実行ファイルへのパス" Name="pythonExePath" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Pythonライブラリパス" Name="pythonLibPath" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="575,179" sap2010:WorkflowViewState.IdRef="MultipleAssign_4">
-      <ui:MultipleAssign.AssignOperations>
-        <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
-          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_9">
-            <ui:AssignOperation.To>
-              <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)">[dicConfig]</OutArgument>
-            </ui:AssignOperation.To>
-            <ui:AssignOperation.Value>
-              <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)">[io_dic]</InArgument>
-            </ui:AssignOperation.Value>
-          </ui:AssignOperation>
-          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_10">
-            <ui:AssignOperation.To>
-              <OutArgument x:TypeArguments="x:String">[processId]</OutArgument>
-            </ui:AssignOperation.To>
-            <ui:AssignOperation.Value>
-              <InArgument x:TypeArguments="x:String">[in_processId]</InArgument>
-            </ui:AssignOperation.Value>
-          </ui:AssignOperation>
-        </scg:List>
-      </ui:MultipleAssign.AssignOperations>
-    </ui:MultipleAssign>
     <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="575,210" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
       <ui:MultipleAssign.AssignOperations>
         <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
@@ -153,7 +129,7 @@
               <OutArgument x:TypeArguments="x:String">[pythonExePath]</OutArgument>
             </ui:AssignOperation.To>
             <ui:AssignOperation.Value>
-              <InArgument x:TypeArguments="x:String">[localAppDataPath+"\Programs\Python\Python" + dicConfig("python-version") + "\"]</InArgument>
+              <InArgument x:TypeArguments="x:String">[localAppDataPath+"\Programs\Python\Python" + io_dicConfig("python-version") + "\"]</InArgument>
             </ui:AssignOperation.Value>
           </ui:AssignOperation>
           <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_3">
@@ -161,42 +137,42 @@
               <OutArgument x:TypeArguments="x:String">[pythonLibPath]</OutArgument>
             </ui:AssignOperation.To>
             <ui:AssignOperation.Value>
-              <InArgument x:TypeArguments="x:String">[localAppDataPath+"\Programs\Python\Python" + dicConfig("python-version") + "\python" + dicConfig("python-version") + ".dll"]</InArgument>
+              <InArgument x:TypeArguments="x:String">[localAppDataPath+"\Programs\Python\Python" + io_dicConfig("python-version") + "\python" + io_dicConfig("python-version") + ".dll"]</InArgument>
             </ui:AssignOperation.Value>
           </ui:AssignOperation>
         </scg:List>
       </ui:MultipleAssign.AssignOperations>
     </ui:MultipleAssign>
-    <p:PythonScope DisplayName="python img to char-img" sap:VirtualizedContainerService.HintSize="575,1283" sap2010:WorkflowViewState.IdRef="PythonScope_1" LibraryPath="[pythonLibPath]" OperationTimeout="10" Path="[pythonExePath]" TargetPlatform="x64" Version="Python &gt;=3.10" WorkingFolder=".\">
+    <p:PythonScope DisplayName="python img to char-img" sap:VirtualizedContainerService.HintSize="575,1104" sap2010:WorkflowViewState.IdRef="PythonScope_1" LibraryPath="[pythonLibPath]" OperationTimeout="10" Path="[pythonExePath]" TargetPlatform="x64" Version="Python &gt;=3.10" WorkingFolder=".\">
       <p:PythonScope.Body>
         <ActivityAction x:TypeArguments="x:Object">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="x:Object" Name="PythonEngineSessionProperty" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="python Do" sap:VirtualizedContainerService.HintSize="541,1223" sap2010:WorkflowViewState.IdRef="Sequence_2">
+          <Sequence DisplayName="python Do" sap:VirtualizedContainerService.HintSize="541,1044" sap2010:WorkflowViewState.IdRef="Sequence_2">
             <Sequence.Variables>
-              <Variable x:TypeArguments="p:PythonObject" Name="pyObjFuncs" />
-              <Variable x:TypeArguments="p:PythonObject" Name="pyObjRes" />
-              <Variable x:TypeArguments="x:String" Name="pyResText" />
-              <Variable x:TypeArguments="s:String[]" Name="color_r_fromToAry" />
-              <Variable x:TypeArguments="s:String[]" Name="color_g_fromToAry" />
-              <Variable x:TypeArguments="s:String[]" Name="color_b_fromToAry" />
-              <Variable x:TypeArguments="s:Object[]" Name="pythonArgs" />
+              <Variable x:TypeArguments="p:PythonObject" sap2010:Annotation.AnnotationText="Pythonスクリプトのオブジェクト" Name="pyObjFuncs" />
+              <Variable x:TypeArguments="p:PythonObject" sap2010:Annotation.AnnotationText="Pythonスクリプトからの戻り値を格納するオブジェクト" Name="pyObjRes" />
+              <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Pythonスクリプトからの戻り値" Name="pyResText" />
+              <Variable x:TypeArguments="s:String[]" sap2010:Annotation.AnnotationText="文字画素の赤色成分の範囲 { 下限, 上限 }" Name="color_r_fromToAry" />
+              <Variable x:TypeArguments="s:String[]" sap2010:Annotation.AnnotationText="文字画素の緑色成分の範囲 { 下限, 上限 }" Name="color_g_fromToAry" />
+              <Variable x:TypeArguments="s:String[]" sap2010:Annotation.AnnotationText="文字画素の青色成分の範囲 { 下限, 上限 }" Name="color_b_fromToAry" />
+              <Variable x:TypeArguments="s:Object[]" sap2010:Annotation.AnnotationText="Pythonスクリプトに渡す引数" Name="pythonArgs" />
             </Sequence.Variables>
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ProcessLog - Invoke Workflow File (Parts\ProcessLog.xaml)" sap:VirtualizedContainerService.HintSize="479,204" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Util\ProcessLog.xaml">
+            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="プロセスログ：「Pythonスクリプト読み込み」" sap:VirtualizedContainerService.HintSize="479,204" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Util\ProcessLog.xaml">
               <ui:InvokeWorkflowFile.Arguments>
-                <InArgument x:TypeArguments="x:String" x:Key="in_processId">[processId]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_processId">[in_processId]</InArgument>
                 <InArgument x:TypeArguments="x:String" x:Key="in_label">Read Python-Script</InArgument>
-                <InArgument x:TypeArguments="x:String" x:Key="in_message">[dicConfig("python-file-path")]</InArgument>
-                <InArgument x:TypeArguments="x:String" x:Key="in_delimiter">[dicConfig("log-delimiter")]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_message">[io_dicConfig("python-file-path")]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_delimiter">[io_dicConfig("log-delimiter")]</InArgument>
               </ui:InvokeWorkflowFile.Arguments>
             </ui:InvokeWorkflowFile>
-            <p:LoadScript Code="{x:Null}" DisplayName="Load Python Script" sap:VirtualizedContainerService.HintSize="479,92" sap2010:WorkflowViewState.IdRef="LoadScript_1" Result="[pyObjFuncs]" ScriptFile="[dicConfig(&quot;python-file-path&quot;)]" />
+            <p:LoadScript Code="{x:Null}" DisplayName="Load Python Script" sap:VirtualizedContainerService.HintSize="479,92" sap2010:WorkflowViewState.IdRef="LoadScript_1" Result="[pyObjFuncs]" ScriptFile="[io_dicConfig(&quot;python-file-path&quot;)]" />
             <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="479,241" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
               <ui:MultipleAssign.AssignOperations>
                 <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
@@ -205,7 +181,7 @@
                       <OutArgument x:TypeArguments="s:String[]">[color_r_fromToAry]</OutArgument>
                     </ui:AssignOperation.To>
                     <ui:AssignOperation.Value>
-                      <InArgument x:TypeArguments="s:String[]">[dicConfig("char-color-r-between").Split("-"c)]</InArgument>
+                      <InArgument x:TypeArguments="s:String[]">[io_dicConfig("char-color-r-between").Split("-"c)]</InArgument>
                     </ui:AssignOperation.Value>
                   </ui:AssignOperation>
                   <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_5">
@@ -213,7 +189,7 @@
                       <OutArgument x:TypeArguments="s:String[]">[color_g_fromToAry]</OutArgument>
                     </ui:AssignOperation.To>
                     <ui:AssignOperation.Value>
-                      <InArgument x:TypeArguments="s:String[]">[dicConfig("char-color-g-between").Split("-"c)]</InArgument>
+                      <InArgument x:TypeArguments="s:String[]">[io_dicConfig("char-color-g-between").Split("-"c)]</InArgument>
                     </ui:AssignOperation.Value>
                   </ui:AssignOperation>
                   <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_6">
@@ -221,7 +197,7 @@
                       <OutArgument x:TypeArguments="s:String[]">[color_b_fromToAry]</OutArgument>
                     </ui:AssignOperation.To>
                     <ui:AssignOperation.Value>
-                      <InArgument x:TypeArguments="s:String[]">[dicConfig("char-color-b-between").Split("-"c)]</InArgument>
+                      <InArgument x:TypeArguments="s:String[]">[io_dicConfig("char-color-b-between").Split("-"c)]</InArgument>
                     </ui:AssignOperation.Value>
                   </ui:AssignOperation>
                   <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_11">
@@ -243,38 +219,16 @@
                 </scg:List>
               </ui:MultipleAssign.AssignOperations>
             </ui:MultipleAssign>
-            <p:InvokeMethod DisplayName="Invoke Python Method" sap:VirtualizedContainerService.HintSize="479,112" sap2010:WorkflowViewState.IdRef="InvokeMethod_1" Instance="[pyObjFuncs]" Name="[dicConfig(&quot;python-method&quot;)]" Parameters="[pythonArgs]" Result="[pyObjRes]" />
+            <p:InvokeMethod DisplayName="Invoke Python Method" sap:VirtualizedContainerService.HintSize="479,112" sap2010:WorkflowViewState.IdRef="InvokeMethod_1" Instance="[pyObjFuncs]" Name="[io_dicConfig(&quot;python-method&quot;)]" Parameters="[pythonArgs]" Result="[pyObjRes]" />
             <p:GetObject x:TypeArguments="x:String" DisplayName="Get Python Object" sap:VirtualizedContainerService.HintSize="479,112" sap2010:WorkflowViewState.IdRef="GetObject`1_1" PythonObject="[pyObjRes]" Result="[pyResText]" />
-            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ProcessLog - Invoke Workflow File (Parts\ProcessLog.xaml)" sap:VirtualizedContainerService.HintSize="479,204" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Util\ProcessLog.xaml">
+            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="プロセスログ：「Pythonスクリプトの結果」" sap:VirtualizedContainerService.HintSize="479,195" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Util\ProcessLog.xaml">
               <ui:InvokeWorkflowFile.Arguments>
-                <InArgument x:TypeArguments="x:String" x:Key="in_processId">[processId]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_processId">[in_processId]</InArgument>
                 <InArgument x:TypeArguments="x:String" x:Key="in_label">Python-Result</InArgument>
                 <InArgument x:TypeArguments="x:String" x:Key="in_message">[pyResText]</InArgument>
-                <InArgument x:TypeArguments="x:String" x:Key="in_delimiter">[dicConfig("log-delimiter")]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_delimiter">[io_dicConfig("log-delimiter")]</InArgument>
               </ui:InvokeWorkflowFile.Arguments>
             </ui:InvokeWorkflowFile>
-            <ui:MultipleAssign DisplayName="Release Objs" sap:VirtualizedContainerService.HintSize="479,170" sap2010:WorkflowViewState.IdRef="MultipleAssign_3">
-              <ui:MultipleAssign.AssignOperations>
-                <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
-                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_8">
-                    <ui:AssignOperation.To>
-                      <OutArgument x:TypeArguments="p:PythonObject">[pyObjRes]</OutArgument>
-                    </ui:AssignOperation.To>
-                    <ui:AssignOperation.Value>
-                      <InArgument x:TypeArguments="p:PythonObject">[Nothing]</InArgument>
-                    </ui:AssignOperation.Value>
-                  </ui:AssignOperation>
-                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_7">
-                    <ui:AssignOperation.To>
-                      <OutArgument x:TypeArguments="p:PythonObject">[pyObjFuncs]</OutArgument>
-                    </ui:AssignOperation.To>
-                    <ui:AssignOperation.Value>
-                      <InArgument x:TypeArguments="p:PythonObject">[Nothing]</InArgument>
-                    </ui:AssignOperation.Value>
-                  </ui:AssignOperation>
-                </scg:List>
-              </ui:MultipleAssign.AssignOperations>
-            </ui:MultipleAssign>
           </Sequence>
         </ActivityAction>
       </p:PythonScope.Body>
