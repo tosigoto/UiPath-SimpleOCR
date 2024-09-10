@@ -45,7 +45,8 @@
       "ignoredFiles": [
         "TEST/TEST-ClearCacheFiles.xaml",
         "TEST/TEST-ImageChar.xaml",
-        "TEST/TEST-ImageTrim.xaml"
+        "TEST/TEST-ImageTrim.xaml",
+        "TEST/TEST-ImageListInit.xaml"
       ]
     },
     "fileInfoCollection": [],
