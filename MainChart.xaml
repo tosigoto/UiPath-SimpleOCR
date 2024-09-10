@@ -101,7 +101,7 @@
       <AssemblyReference>System.IO.FileSystem.DriveInfo</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Flowchart DisplayName="MainChart" sap:VirtualizedContainerService.HintSize="1084,811" sap2010:WorkflowViewState.IdRef="Flowchart_1">
+  <Flowchart DisplayName="MainChart" sap:VirtualizedContainerService.HintSize="1105,811" sap2010:WorkflowViewState.IdRef="Flowchart_1">
     <Flowchart.Variables>
       <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:Annotation.AnnotationText="設定ディクショナリー" Name="dicConfig" />
       <Variable x:TypeArguments="sd:DataTable" sap2010:Annotation.AnnotationText="画像リストのスプレッドシート" Name="dtRows" />
@@ -241,7 +241,7 @@
                   <av:PointCollection x:Key="ConnectorLocation">1015,650 1045,650 1045,839.5 989,839.5</av:PointCollection>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
-              <Sequence DisplayName="プロセス Try-Sequence" sap:VirtualizedContainerService.HintSize="110,70" sap2010:WorkflowViewState.IdRef="Sequence_1">
+              <Sequence DisplayName="プロセス Try-Sequence" sap:VirtualizedContainerService.HintSize="581,695" sap2010:WorkflowViewState.IdRef="Sequence_1">
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -263,7 +263,7 @@
                 </ui:MultipleAssign>
                 <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="519,459" sap2010:WorkflowViewState.IdRef="TryCatch_2">
                   <TryCatch.Try>
-                    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="プロセス" sap:VirtualizedContainerService.HintSize="334,172" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="Parts\Process.xaml">
+                    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="プロセス" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="Parts\Process.xaml">
                       <ui:InvokeWorkflowFile.Arguments>
                         <InArgument x:TypeArguments="x:String" x:Key="in_imgPath">[imgPath]</InArgument>
                         <InOutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="io_dicConfig">[dicConfig]</InOutArgument>
@@ -305,7 +305,7 @@
                                   <OutArgument x:TypeArguments="x:String">[ocrResText]</OutArgument>
                                 </ui:AssignOperation.To>
                                 <ui:AssignOperation.Value>
-                                  <InArgument x:TypeArguments="x:String">["【ERROR-MESSAGE】" + exception.Message]</InArgument>
+                                  <InArgument x:TypeArguments="x:String">["【ERROR-MESSAGE】" + exception.Message + "@" + exception.Source]</InArgument>
                                 </ui:AssignOperation.Value>
                               </ui:AssignOperation>
                             </scg:List>

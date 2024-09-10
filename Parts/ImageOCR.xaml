@@ -11,7 +11,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1024,1060</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1045,845</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ImageOCR_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -98,7 +98,7 @@
       <AssemblyReference>UiPath.OCR.Contracts</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="OCRで画像ファイルから文字列を読み取る。" DisplayName="ImageOCR" sap:VirtualizedContainerService.HintSize="496,995" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="OCRで画像ファイルから文字列を読み取る。" DisplayName="ImageOCR" sap:VirtualizedContainerService.HintSize="496,735" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="ui:Image" sap2010:Annotation.AnnotationText="画像データ" Name="img" />
     </Sequence.Variables>
@@ -116,16 +116,16 @@
         <InArgument x:TypeArguments="x:String" x:Key="in_delimiter">[io_dicConfig("log-delimiter")]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <ui:LoadImage DisplayName="Load Image" FileName="[in_imgPath]" sap:VirtualizedContainerService.HintSize="434,117" sap2010:WorkflowViewState.IdRef="LoadImage_2" Image="[img]" />
-    <TryCatch DisplayName="OCRで文字列を取得" sap:VirtualizedContainerService.HintSize="434,476" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+    <ui:LoadImage DisplayName="画像ファイル読み込み in ImageOCR" FileName="[in_imgPath]" sap:VirtualizedContainerService.HintSize="434,117" sap2010:WorkflowViewState.IdRef="LoadImage_2" Image="[img]" />
+    <TryCatch DisplayName="OCRで文字列を取得" sap:VirtualizedContainerService.HintSize="434,216" sap2010:WorkflowViewState.IdRef="TryCatch_1">
       <TryCatch.Try>
         <ui:GoogleOCR AllowedCharacters="{x:Null}" DeniedCharacters="{x:Null}" FilterRegion="{x:Null}" Invert="{x:Null}" Language="{x:Null}" Output="{x:Null}" PredictionId="{x:Null}" Profile="{x:Null}" Scale="{x:Null}" ComputeSkewAngle="False" DisplayName="Tesseract OCR" ExtractWords="False" sap:VirtualizedContainerService.HintSize="200,25" sap2010:WorkflowViewState.IdRef="GoogleOCR_1" Image="[img]" NoopExecution="False" Text="[out_ocrResText]" />
       </TryCatch.Try>
       <TryCatch.Catches>
-        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="400,282" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="400,22" sap2010:WorkflowViewState.IdRef="Catch`1_1">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
-              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
               <x:Boolean x:Key="IsPinned">False</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>

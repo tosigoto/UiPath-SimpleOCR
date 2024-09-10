@@ -8,7 +8,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1024,1337</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1045,1337</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>TEST_ImageRatio_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -101,7 +101,7 @@
       <AssemblyReference>UiPath.Python</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="画像を切り抜く。&#xD;&#xA;&#xD;&#xA;切り抜き画像を新規保存する。" DisplayName="ImageTrim" sap:VirtualizedContainerService.HintSize="541,1272" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="画像を切り抜く。&#xA;&#xA;切り抜き画像を新規保存する。" DisplayName="ImageTrim" sap:VirtualizedContainerService.HintSize="541,1272" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:Double" sap2010:Annotation.AnnotationText="画像の幅比率 = &#xA;  読み込み画像の幅 / 設定値（OCR対象画像の幅）" Name="ratioWidth" />
       <Variable x:TypeArguments="x:Double" sap2010:Annotation.AnnotationText="画像の高さ比率 = &#xA;  読み込み画像の高さ / 設定値（OCR対象画像の高さ）" Name="ratioHeight" />
@@ -123,7 +123,7 @@
         <InArgument x:TypeArguments="x:String" x:Key="in_delimiter">[io_dicConfig("log-delimiter")]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <ui:LoadImage DisplayName="Load Image" FileName="[in_imgPath]" sap:VirtualizedContainerService.HintSize="479,117" sap2010:WorkflowViewState.IdRef="LoadImage_1" Image="[img]" />
+    <ui:LoadImage DisplayName="画像ファイル読み込み in ImageTrim" FileName="[in_imgPath]" sap:VirtualizedContainerService.HintSize="479,117" sap2010:WorkflowViewState.IdRef="LoadImage_1" Image="[img]" />
     <ui:MultipleAssign DisplayName="Get Ratio" sap:VirtualizedContainerService.HintSize="479,210" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
       <ui:MultipleAssign.AssignOperations>
         <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
