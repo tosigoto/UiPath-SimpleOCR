@@ -101,17 +101,13 @@
       <AssemblyReference>System.IO.FileSystem.DriveInfo</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Flowchart DisplayName="MainChart" sap:VirtualizedContainerService.HintSize="1193,811" sap2010:WorkflowViewState.IdRef="Flowchart_1">
+  <Flowchart DisplayName="MainChart" sap:VirtualizedContainerService.HintSize="1174,811" sap2010:WorkflowViewState.IdRef="Flowchart_1">
     <Flowchart.Variables>
       <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:Annotation.AnnotationText="設定ディクショナリー" Name="dicConfig" />
       <Variable x:TypeArguments="sd:DataTable" sap2010:Annotation.AnnotationText="画像リストのスプレッドシート" Name="dtRows" />
       <Variable x:TypeArguments="x:Int32" sap2010:Annotation.AnnotationText="スプレッドシートのデータ行番号(0からカウント開始)" Name="rowIdx" />
       <Variable x:TypeArguments="x:Int32" sap2010:Annotation.AnnotationText="スプレッドシートのデータ行最終番号" Name="rowIdxLast" />
       <Variable x:TypeArguments="sd:DataRow" sap2010:Annotation.AnnotationText="スプレッドシートのデータ行" Name="rowCurrent" />
-      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="画像ファイルパス" Name="imgPath" />
-      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="OCR結果" Name="ocrResText" />
-      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="プロセスID" Name="processId" />
-      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="プロセス実行時のタイムスタンプ" Name="timestamp" />
       <Variable x:TypeArguments="x:Int32" sap2010:Annotation.AnnotationText="残りリトライ回数" Name="retryCountDown" />
       <Variable x:TypeArguments="x:Boolean" sap2010:Annotation.AnnotationText="プロセス完遂判定。&#xA;&#xA;プロセス後、Falseだったら、プロセスをリトライする。" Name="isProcessPass" />
       <Variable x:TypeArguments="ui:BusinessRuleException" sap2010:Annotation.AnnotationText="ビジネス例外" Name="bizEx" />
@@ -174,22 +170,6 @@
           <ui:MultipleAssign DisplayName="Get Row, ProcessID, RetryCountDown" sap:VirtualizedContainerService.HintSize="110,70" sap2010:WorkflowViewState.IdRef="MultipleAssign_3">
             <ui:MultipleAssign.AssignOperations>
               <scg:List x:TypeArguments="ui:AssignOperation" Capacity="8">
-                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_13">
-                  <ui:AssignOperation.To>
-                    <OutArgument x:TypeArguments="x:String">[timestamp]</OutArgument>
-                  </ui:AssignOperation.To>
-                  <ui:AssignOperation.Value>
-                    <InArgument x:TypeArguments="x:String">[DateTime.Now.ToString("yyMMdd-HHmmssff")]</InArgument>
-                  </ui:AssignOperation.Value>
-                </ui:AssignOperation>
-                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_10">
-                  <ui:AssignOperation.To>
-                    <OutArgument x:TypeArguments="x:String">[processId]</OutArgument>
-                  </ui:AssignOperation.To>
-                  <ui:AssignOperation.Value>
-                    <InArgument x:TypeArguments="x:String">["P" + (rowIdx + 1 Mod 1000000).ToString("000000")]</InArgument>
-                  </ui:AssignOperation.Value>
-                </ui:AssignOperation>
                 <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_3">
                   <ui:AssignOperation.To>
                     <OutArgument x:TypeArguments="sd:DataRow">[rowCurrent]</OutArgument>
@@ -198,20 +178,20 @@
                     <InArgument x:TypeArguments="sd:DataRow">[dtRows(rowIdx)]</InArgument>
                   </ui:AssignOperation.Value>
                 </ui:AssignOperation>
-                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_5">
+                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_25">
                   <ui:AssignOperation.To>
-                    <OutArgument x:TypeArguments="x:String">[imgPath]</OutArgument>
+                    <OutArgument x:TypeArguments="x:Object">[rowCurrent("timestamp")]</OutArgument>
                   </ui:AssignOperation.To>
                   <ui:AssignOperation.Value>
-                    <InArgument x:TypeArguments="x:String">[rowCurrent("path").ToString.Trim]</InArgument>
+                    <InArgument x:TypeArguments="x:Object">[DateTime.Now.ToString("yyMMdd-HHmmssff")]</InArgument>
                   </ui:AssignOperation.Value>
                 </ui:AssignOperation>
-                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_6">
+                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_24">
                   <ui:AssignOperation.To>
-                    <OutArgument x:TypeArguments="x:String">[ocrResText]</OutArgument>
+                    <OutArgument x:TypeArguments="x:Object">[rowCurrent("process-id")]</OutArgument>
                   </ui:AssignOperation.To>
                   <ui:AssignOperation.Value>
-                    <InArgument x:TypeArguments="x:String">[Nothing]</InArgument>
+                    <InArgument x:TypeArguments="x:Object">["P" + (rowIdx + 1 Mod 1000000).ToString("000000")]</InArgument>
                   </ui:AssignOperation.Value>
                 </ui:AssignOperation>
                 <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_15">
@@ -263,10 +243,8 @@
                   <TryCatch.Try>
                     <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="プロセス" sap:VirtualizedContainerService.HintSize="334,172" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="Parts\Process.xaml">
                       <ui:InvokeWorkflowFile.Arguments>
-                        <InArgument x:TypeArguments="x:String" x:Key="in_imgPath">[imgPath]</InArgument>
                         <InOutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="io_dicConfig">[dicConfig]</InOutArgument>
-                        <InArgument x:TypeArguments="x:String" x:Key="in_processId">[processId]</InArgument>
-                        <OutArgument x:TypeArguments="x:String" x:Key="out_ocrResText">[ocrResText]</OutArgument>
+                        <InOutArgument x:TypeArguments="sd:DataRow" x:Key="io_row">[rowCurrent]</InOutArgument>
                       </ui:InvokeWorkflowFile.Arguments>
                       <sap:WorkflowViewStateService.ViewState>
                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -306,10 +284,10 @@
                                 </ui:AssignOperation>
                                 <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_20">
                                   <ui:AssignOperation.To>
-                                    <OutArgument x:TypeArguments="x:String">[ocrResText]</OutArgument>
+                                    <OutArgument x:TypeArguments="x:Object">[rowCurrent("ocr-result")]</OutArgument>
                                   </ui:AssignOperation.To>
                                   <ui:AssignOperation.Value>
-                                    <InArgument x:TypeArguments="x:String">["【ERROR-MESSAGE】" + exception.Message + "@" + exception.Source]</InArgument>
+                                    <InArgument x:TypeArguments="x:Object">["【ERROR-MESSAGE】" + exception.Message + "@" + exception.Source]</InArgument>
                                   </ui:AssignOperation.Value>
                                 </ui:AssignOperation>
                               </scg:List>
@@ -322,7 +300,7 @@
                           </ui:MultipleAssign>
                           <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="エラーログ：プロセスエラー" sap:VirtualizedContainerService.HintSize="479,195" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_16" UnSafe="False" WorkflowFileName="Util\ErrorLog.xaml">
                             <ui:InvokeWorkflowFile.Arguments>
-                              <InArgument x:TypeArguments="x:String" x:Key="in_processId">[processId]</InArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="in_processId">[rowCurrent("process-id").ToString]</InArgument>
                               <InArgument x:TypeArguments="x:String" x:Key="in_label">プロセスエラー</InArgument>
                               <InArgument x:TypeArguments="x:String" x:Key="in_message">[exception.Message + "@" + exception.Source]</InArgument>
                               <InArgument x:TypeArguments="x:String" x:Key="in_delimiter">[dicConfig("log-delimiter")]</InArgument>
@@ -359,30 +337,6 @@
                       <ui:MultipleAssign DisplayName="Update Row, rowIdx+=1" sap:VirtualizedContainerService.HintSize="110,70" sap2010:WorkflowViewState.IdRef="MultipleAssign_4">
                         <ui:MultipleAssign.AssignOperations>
                           <scg:List x:TypeArguments="ui:AssignOperation" Capacity="8">
-                            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_7">
-                              <ui:AssignOperation.To>
-                                <OutArgument x:TypeArguments="x:Object">[rowCurrent("ocr-result")]</OutArgument>
-                              </ui:AssignOperation.To>
-                              <ui:AssignOperation.Value>
-                                <InArgument x:TypeArguments="x:Object">[ocrResText]</InArgument>
-                              </ui:AssignOperation.Value>
-                            </ui:AssignOperation>
-                            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_14">
-                              <ui:AssignOperation.To>
-                                <OutArgument x:TypeArguments="x:Object">[rowCurrent("timestamp")]</OutArgument>
-                              </ui:AssignOperation.To>
-                              <ui:AssignOperation.Value>
-                                <InArgument x:TypeArguments="x:Object">[timestamp]</InArgument>
-                              </ui:AssignOperation.Value>
-                            </ui:AssignOperation>
-                            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_11">
-                              <ui:AssignOperation.To>
-                                <OutArgument x:TypeArguments="x:Object">[rowCurrent("process-id")]</OutArgument>
-                              </ui:AssignOperation.To>
-                              <ui:AssignOperation.Value>
-                                <InArgument x:TypeArguments="x:Object">[processId]</InArgument>
-                              </ui:AssignOperation.Value>
-                            </ui:AssignOperation>
                             <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_9">
                               <ui:AssignOperation.To>
                                 <OutArgument x:TypeArguments="x:Int32">[rowIdx]</OutArgument>
@@ -410,7 +364,7 @@
                           </sap:WorkflowViewStateService.ViewState>
                           <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="画像リストに処理結果を書き込み" sap:VirtualizedContainerService.HintSize="110,70" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_13" UnSafe="False" WorkflowFileName="Util\WriteList.xaml">
                             <ui:InvokeWorkflowFile.Arguments>
-                              <InArgument x:TypeArguments="x:String" x:Key="in_processId">[processId]</InArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="in_processId">[rowCurrent("process-id").ToString]</InArgument>
                               <InArgument x:TypeArguments="x:String" x:Key="in_listPath">[dicConfig("image-list-path")]</InArgument>
                               <InOutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="io_dicConfig">[dicConfig]</InOutArgument>
                               <InArgument x:TypeArguments="x:String" x:Key="in_listSheetName">[dicConfig("image-list-sheet")]</InArgument>
@@ -504,7 +458,7 @@
                                   </sap:WorkflowViewStateService.ViewState>
                                   <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ビジネス例外ログ" sap:VirtualizedContainerService.HintSize="110,70" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_17" UnSafe="False" WorkflowFileName="Util\ErrorLog.xaml">
                                     <ui:InvokeWorkflowFile.Arguments>
-                                      <InArgument x:TypeArguments="x:String" x:Key="in_processId">[processId]</InArgument>
+                                      <InArgument x:TypeArguments="x:String" x:Key="in_processId">[rowCurrent("process-id").ToString]</InArgument>
                                       <InArgument x:TypeArguments="x:String" x:Key="in_label">ビジネス例外</InArgument>
                                       <InArgument x:TypeArguments="x:String" x:Key="in_message">[bizEx.Message + "@" + bizEx.Source]</InArgument>
                                       <InArgument x:TypeArguments="x:String" x:Key="in_delimiter">##</InArgument>
@@ -584,8 +538,8 @@
                                 </sap:WorkflowViewStateService.ViewState>
                                 <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ProcessLog - Invoke Workflow File (Util\ProcessLog.xaml)" sap:VirtualizedContainerService.HintSize="388,204" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_8" UnSafe="False" WorkflowFileName="Util\ProcessLog.xaml">
                                   <ui:InvokeWorkflowFile.Arguments>
-                                    <InArgument x:TypeArguments="x:String" x:Key="in_processId">[processId]</InArgument>
-                                    <InArgument x:TypeArguments="x:String" x:Key="in_label">Wait Before-Retry</InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="in_processId">[rowCurrent("process-id").ToString]</InArgument>
+                                    <InArgument x:TypeArguments="x:String" x:Key="in_label">リトライ前に待機</InArgument>
                                     <InArgument x:TypeArguments="x:String" x:Key="in_message">[dicConfig("retry-delay-sec") + " sec"]</InArgument>
                                     <InArgument x:TypeArguments="x:String" x:Key="in_delimiter">[dicConfig("log-delimiter")]</InArgument>
                                   </ui:InvokeWorkflowFile.Arguments>
